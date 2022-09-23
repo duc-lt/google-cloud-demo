@@ -1,5 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { Storage, Bucket } from '@google-cloud/storage';
+import { userInfo } from 'os';
 
 @Injectable()
 export class StorageService {
@@ -35,13 +36,13 @@ export class StorageService {
     );
   }
 
-  async download(fileName: string) {
-    return this.bucket.file(fileName).download({
-      destination: `/home/tdl/google-cloud-demo/api/public/${fileName}`,
+  async download(filename: string) {
+    return this.bucket.file(filename).download({
+      destination: `/home/${userInfo().username}/${filename}`,
     });
   }
 
-  async delete(fileName: string) {
-    await this.bucket.file(fileName).delete({ ignoreNotFound: true });
+  async delete(filename: string) {
+    await this.bucket.file(filename).delete({ ignoreNotFound: true });
   }
 }

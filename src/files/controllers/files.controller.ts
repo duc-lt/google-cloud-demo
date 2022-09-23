@@ -3,7 +3,6 @@ import {
   Controller,
   Delete,
   Get,
-  Param,
   Post,
   Query,
   UploadedFiles,
@@ -23,8 +22,8 @@ export class FilesController {
   ) {}
 
   @Get('download')
-  async find(@Query('fileName') fileName: string) {
-    await this.storageService.download(fileName);
+  async find(@Query('filename') filename: string) {
+    await this.storageService.download(filename);
     return {
       success: true,
     };
@@ -48,8 +47,8 @@ export class FilesController {
   }
 
   @Delete()
-  async remove(@Query('fileName') fileName: string) {
-    await this.storageService.delete(fileName);
+  async remove(@Query('filename') filename: string) {
+    await this.storageService.delete(filename);
     return {
       success: true,
     };
