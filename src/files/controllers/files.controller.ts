@@ -5,6 +5,7 @@ import {
   Get,
   Param,
   Post,
+  Query,
   UploadedFiles,
   UseInterceptors,
 } from '@nestjs/common';
@@ -21,18 +22,18 @@ export class FilesController {
     private readonly filesService: FilesService,
   ) {}
 
-  @Get('/:fileName')
-  async find(@Param('fileName') fileName: string) {
+  @Get('download')
+  async find(@Query('fileName') fileName: string) {
     await this.storageService.download(fileName);
     return {
       success: true,
     };
   }
 
-  @Get()
-  async findAll() {
-    return await this.filesService.findAll();
-  }
+  // @Get()
+  // async findAll() {
+  //   return await this.filesService.findAll();
+  // }
 
   @Post()
   async create(@Body() createFilesDto: CreateFilesDto) {
@@ -46,8 +47,11 @@ export class FilesController {
     return await this.storageService.uploadMultiple(files);
   }
 
-  @Delete(':id')
-  async remove(@Param('id') id: string) {
-
+  @Delete()
+  async remove(@Query('fileName') fileName: string) {
+    await this.storageService.delete(fileName);
+    return {
+      success: true,
+    };
   }
 }
