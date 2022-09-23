@@ -5,10 +5,13 @@ import {
   Get,
   Post,
   Query,
+  Res,
   UploadedFiles,
   UseInterceptors,
 } from '@nestjs/common';
 import { FilesInterceptor } from '@nestjs/platform-express';
+import { Response } from 'express';
+import { userInfo } from 'os';
 import { StorageService } from 'src/storage/storage.service';
 import { fileUploadOptions } from '../configs/files.config';
 import { CreateFilesDto } from '../dto/create-files.dto';
@@ -22,17 +25,10 @@ export class FilesController {
   ) {}
 
   @Get('download')
-  async find(@Query('filename') filename: string) {
+  async find(@Query('filename') filename: string, @Res() response: Response) {
     await this.storageService.download(filename);
-    return {
-      success: true,
-    };
+    response.download(`/home/${userInfo().username}/${filename}`);
   }
-
-  // @Get()
-  // async findAll() {
-  //   return await this.filesService.findAll();
-  // }
 
   @Post()
   async create(@Body() createFilesDto: CreateFilesDto) {
