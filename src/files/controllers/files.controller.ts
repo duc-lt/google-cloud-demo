@@ -24,6 +24,11 @@ export class FilesController {
     private readonly filesService: FilesService,
   ) {}
 
+  @Get()
+  async findAll() {
+    return await this.storageService.findAll();
+  }
+
   @Get('download')
   async find(@Query('filename') filename: string, @Res() response: Response) {
     await this.storageService.download(filename);

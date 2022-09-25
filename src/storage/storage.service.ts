@@ -20,7 +20,10 @@ export class StorageService {
   }
 
   async findAll() {
-    return this.bucket.getFiles();
+    const files = await this.bucket.getFiles();
+    return files[0].map((file) => ({
+      name: file.metadata.name,
+    }));
   }
 
   private async uploadSingle(file: Express.Multer.File) {
