@@ -65,7 +65,6 @@ async function renderFiles() {
     fileItem.classList.add('file-item');
     fileItem.style.display = 'flex';
     fileItem.style.justifyContent = 'space-between';
-    // fileItem.style.maxWidth = '500px';
 
     const ref = document.createElement('a');
     ref.innerText = filename;
@@ -75,14 +74,14 @@ async function renderFiles() {
     const deleteBtn = document.createElement('button');
     deleteBtn.innerText = 'Delete';
     deleteBtn.addEventListener('click', async () => {
-      try {
-        if (confirm('Are you sure you want to delete this file?')) {
+      if (confirm('Are you sure you want to delete this file?')) {
+        try {
           await remove(filename);
           alert(`Deleted ${filename} successfully`);
           downloadTabBtn.click();
+        } catch (error) {
+          alert({ error: error?.message });
         }
-      } catch (error) {
-        alert({ error: error?.message });
       }
     });
 

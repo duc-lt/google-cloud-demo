@@ -1,5 +1,5 @@
 .container {
-  max-width: 1000px;
+  max-width: 500px;
 }
 
 /* Style the tab */
@@ -40,4 +40,5 @@
 
 ul#files li {
   list-style-type: none;
+  margin-bottom: 10px;
 }
