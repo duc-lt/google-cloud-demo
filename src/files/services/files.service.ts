@@ -26,7 +26,7 @@ export class FilesService {
 
   async remove(id: string) {
     const file = await this.fileModel.findById(id).lean();
-    await this.storageService.delete(file.name);
+    await this.storageService.deleteSingle(file.name);
     return this.fileModel.findByIdAndRemove(id);
   }
 }

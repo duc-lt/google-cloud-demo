@@ -38,7 +38,11 @@
   border-top: none;
 }
 
+ul#files {
+  list-style: none;
+  padding-left: 0;
+}
+
 ul#files li {
-  list-style-type: none;
   margin-bottom: 10px;
 }

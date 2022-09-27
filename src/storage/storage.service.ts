@@ -34,7 +34,7 @@ export class StorageService {
   async uploadMultiple(files: Express.Multer.File[]) {
     return Promise.all(
       files.map(async (file) => {
-        return this.uploadSingle(file);
+        return await this.uploadSingle(file);
       }),
     );
   }
@@ -45,7 +45,13 @@ export class StorageService {
     });
   }
 
-  async delete(filename: string) {
+  async deleteSingle(filename: string) {
     await this.bucket.file(filename).delete({ ignoreNotFound: true });
+  }
+
+  async deleteMultiple(filenames: string[]) {
+    Promise.all(filenames.map(async (filename) => {
+      return await this.deleteSingle(filename);
+    }));
   }
 }

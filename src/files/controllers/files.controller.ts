@@ -47,9 +47,19 @@ export class FilesController {
     return await this.storageService.uploadMultiple(files);
   }
 
-  @Delete()
-  async remove(@Query('filename') filename: string) {
-    await this.storageService.delete(filename);
+  @Delete('single')
+  async removeSingle(@Query('filename') filename: string) {
+    await this.storageService.deleteSingle(filename);
+    return {
+      success: true,
+    };
+  }
+
+  @Delete('multiple')
+  async removeMultiple(@Query('filename') filenames: string[] | string) {
+    Array.isArray(filenames)
+      ? await this.storageService.deleteMultiple(filenames)
+      : await this.storageService.deleteSingle(filenames);
     return {
       success: true,
     };
