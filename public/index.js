@@ -27,7 +27,7 @@ filesForm.addEventListener('submit', async (e) => {
   try {
     e.preventDefault();
     const res = await upload();
-    console.log(res);
+    console.log(Array.isArray(res));
     if (Array.isArray(res) && res.length > 0) {
       alert('Uploaded files succesfully');
     } else {
@@ -35,7 +35,7 @@ filesForm.addEventListener('submit', async (e) => {
     }
     downloadTabBtn.click();
   } catch (error) {
-    alert({ error: error?.message });
+    alert('An error occured');
   }
 });
 
@@ -83,14 +83,14 @@ function renderDeleteMultipleArea() {
   
     const deleteAllCheckbox = document.createElement('input');
     deleteAllCheckbox.setAttribute('type', 'checkbox');
-    deleteAllCheckbox.addEventListener('change', () => {
+    deleteAllCheckbox.addEventListener('change', (e) => {
       const deleteCheckboxes = document.querySelectorAll('.delete-checkbox');
       for (const cb of deleteCheckboxes) {
-        cb.checked = !cb.checked;
+        cb.checked = e.currentTarget.checked;
       }
   
       const deleteMultipleBtn = document.getElementById('delete-multiple-btn');
-      deleteMultipleBtn.disabled = !deleteMultipleBtn.disabled;
+      deleteMultipleBtn.disabled = !e.currentTarget.checked;
     });
   
     const deleteMultipleBtn = document.createElement('button');
