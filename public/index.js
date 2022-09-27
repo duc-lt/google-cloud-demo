@@ -27,6 +27,7 @@ filesForm.addEventListener('submit', async (e) => {
   try {
     e.preventDefault();
     const res = await upload();
+    console.log(res);
     if (Array.isArray(res) && res.length > 0) {
       alert('Uploaded files succesfully');
     } else {
